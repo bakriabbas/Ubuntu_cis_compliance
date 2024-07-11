@@ -1,0 +1,41 @@
+chmod 0700 /etc/cron.d
+chmod 0700 /etc/cron.hourly
+chmod 0700 /etc/cron.daily
+chmod 0700 /etc/cron.weekly
+chmod 0700 /etc/cron.monthly
+chmod 0600 /etc/crontab
+chmod 0600 /etc/ssh/sshd_config
+chmod 0640 /etc/cron.allow
+
+echo "###############################################################
+#                           Warning                           #
+#             You are entering into a secured system!         #
+#        This server is restricted to authorized users only   #
+#         All activities on this system are logged.           #
+#  Disconnect IMMEDIATELY if you are not an authorized user!  #
+###############################################################" > /etc/issue
+cat /etc/issue > /etc/issue.net
+
+sed -i "s/#Compress=yes/Compress=yes/" /etc/systemd/journald.conf
+sed -i "s/#LoginGraceTime 2m/LoginGraceTime 60/" /etc/ssh/sshd_config
+sed -i "s/#PermitRootLogin yes/PermitRootLogin no/" /etc/ssh/sshd_config
+sed -i "s/#PermitRootLogin prohibit-password/PermitRootLogin no/" /etc/ssh/sshd_config
+sed -i "s/#PermitEmptyPasswords/PermitEmptyPasswords/" /etc/ssh/sshd_config
+sed -i "s/#MaxStartups 10:30:100/MaxStartups 10:30:60/" /etc/ssh/sshd_config
+sed -i "s/#MaxAuthTries 6/MaxAuthTries 4/" /etc/ssh/sshd_config
+sed -i "s/X11Forwarding yes/X11Forwarding no/" /etc/ssh/sshd_config
+sed -i "s/#Banner none/Banner \/etc\/issue.net/" /etc/ssh/sshd_config
+sed -i "12i Defaults logfile=\"\/var\/log\/sudo.log\"" /etc/sudoers
+
+echo "install cramfs /bin/true" >> /etc/modprobe.d/cramfs.conf
+echo "install freevxfs /bin/true" >> /etc/modprobe.d/freevxfs.conf
+echo "install hfs /bin/true" >> /etc/modprobe.d/hfs.conf
+echo "install udf /bin/true" >> /etc/modprobe.d/udf.conf
+echo "install usb-storage /bin/true" >> /etc/modprobe.d/usb-storage.conf
+echo "install jffs2 /bin/true" >> /etc/modprobe.d/jffs2.conf
+echo "install hfsplus /bin/true" >> /etc/modprobe.d/hfsplus.conf
+echo "install squashfs /bin/true" >> /etc/modprobe.d/squashfs.conf
+echo "install dccp /bin/true" >> /etc/modprobe.d/dccp.conf
+echo "install sctp /bin/true" >> /etc/modprobe.d/sctp.conf
+echo "install rds /bin/true" >> /etc/modprobe.d/rds.conf
+echo "install tipc /bin/true" >> /etc/modprobe.d/tipc.conf
